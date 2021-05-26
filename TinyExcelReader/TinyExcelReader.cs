@@ -1,12 +1,15 @@
 ﻿// Install-Package ExcelDataReader -Version 3.6.0 -ProjectName TinyExcelReader
 // Install-Package System.Text.Encoding.CodePages -Version 5.0.0 -ProjectName TinyExcelReader
 
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Text;
 
 using ExcelDataReader;
+
+[assembly: CLSCompliant(true)]
 
 namespace TinyExcelReader {
 
