@@ -66,10 +66,10 @@ namespace TinyExcelReader {
 
           do {
             while (reader.Read()) {
-              string[] row = new string[reader.RowCount];
+              string[] row = new string[reader.FieldCount];
 
               for (int i = 0; i < reader.FieldCount; ++i)
-                row[i] = $"{reader[i]}";
+                row[i] = reader.IsDBNull(i) ? null :  $"{reader[i]}";
 
               yield return (reader.Name, page, row);
             }
