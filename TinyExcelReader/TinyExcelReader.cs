@@ -22,6 +22,19 @@ namespace TinyExcelReader {
   //-------------------------------------------------------------------------------------------------------------------
 
   public static class Excel {
+    #region Algorithm
+
+    private static IExcelDataReader CreateReader(Stream stream, ExcelReaderConfiguration config) {
+      try {
+        return ExcelReaderFactory.CreateReader(stream, config);
+      }
+      catch (Exception e) {
+        throw new TinyExcelReaderException(e.Message, e);
+      }
+    }
+
+    #endregion Algorithm
+
     #region Create
 
     static Excel() {
@@ -41,13 +54,14 @@ namespace TinyExcelReader {
     public static IEnumerable<(string pageName, int pageIndex, string[] row)> ReadLines(
       string filePath,
       string password = null) {
+
       ExcelReaderConfiguration config = new ExcelReaderConfiguration();
 
       if (!string.IsNullOrWhiteSpace(password))
         config.Password = password;
 
       using (var stream = File.Open(filePath, FileMode.Open, FileAccess.Read)) {
-        using (var reader = ExcelReaderFactory.CreateReader(stream, config)) {
+        using (var reader = CreateReader(stream, config)) {
           int page = 0;
 
           do {
@@ -82,7 +96,7 @@ namespace TinyExcelReader {
         config.Password = password;
 
       using (var stream = File.Open(filePath, FileMode.Open, FileAccess.Read)) {
-        using (var reader = ExcelReaderFactory.CreateReader(stream, config)) {
+        using (var reader = CreateReader(stream, config)) {
           int page = 0;
 
           do {
